@@ -1,0 +1,29 @@
+/* src/app/dashboard/tables/tables.component.css */
+
+/* Styles for the table container to make it scrollable on small screens */
+.table-container {
+  overflow-x: auto; /* Allows horizontal scrolling if the table is too wide */
+}
+
+/* Responsive table styles */
+.responsive-table {
+  width: 100%; /* Full width to make it responsive */
+  min-width: 600px; /* Minimum width for better readability */
+}
+
+.mat-header-cell,
+.mat-cell {
+  white-space: nowrap; /* Prevent text wrapping in table cells */
+}
+
+@media (max-width: 768px) {
+  .responsive-table {
+    min-width: 500px; /* Adjust as needed for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .responsive-table {
+    min-width: 400px; /* Further adjustments for very small screens */
+  }
+}

@@ -1,0 +1,73 @@
+.sidenav-container {
+  height: 100vh;
+  width: 100%;
+}
+.sidenav {
+  width: 250px;
+  border-right: 1px solid rgba(0, 0, 0, 0.05);
+}
+.custom-placeholder::placeholder {
+  font-size: 17px; /* Adjust the size as needed */
+}
+
+.content {
+  padding: 16px;
+}
+
+.mat-toolbar.mat-primary {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  color: white;
+}
+.myclass {
+  border-radius: 25px;
+}
+.spacer {
+  flex: 1 1 auto;
+}
+
+@media (max-width: 600px) {
+  .sidenav {
+    width: 200px;
+  }
+}
+.inputss {
+  width: 20vw;
+}
+.profile {
+  margin: 50px;
+}
+
+/* app.component.css or styles.css */
+
+/* Style for the profile button */
+.profile-button {
+  width: 35px; /* Set the desired button size */
+  height: 35px; /* Set the desired button size */
+  border-radius: 50%; /* Make the button circular */
+  background-image: url("https://media.istockphoto.com/id/1336832604/photo/male-teenage-student-in-yellow-background-stock-photo.jpg?s=2048x2048&w=is&k=20&c=2aDORiMJQW72BlWMtw1kq0VKqFBWyh7wlbKNZeHbm5E="); /* Set the profile image */
+  background-size: cover; /* Cover the button area without distortion */
+  background-position: center; /* Center the image within the button */
+  border: none; /* Remove any default border */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  outline: none; /* Remove outline on focus */
+  margin-left: 40px;
+  margin-right: 40px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1); /* Optional: add a subtle shadow for better appearance */
+  border: 2px solid rgb(56, 185, 236);
+}
+
+/* Optional: Add hover effect */
+.profile-button:hover {
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2); /* Enhance the shadow on hover */
+}
+
+/* sidenav.component.css */
+.submenu {
+  margin-left: -100px;
+}
+.Mying {
+  height: 30px;
+}
+i {
+  color: rgba(0, 0, 0, 0.457);
+}
