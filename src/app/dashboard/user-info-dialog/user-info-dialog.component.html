@@ -1,0 +1,51 @@
+<div mat-dialog-actions class="d-flex justify-content-end ">
+  <button mat-icon-button (click)="onClose()" aria-label="Cancel">
+    <mat-icon>cancel</mat-icon>
+  </button>
+</div>
+<h2 class="mt-0" mat-dialog-title>User Information</h2>
+<div mat-dialog-content class="mt-0">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <p><strong>Name:</strong> </p>
+        <p class="border rounded p-2">{{ data.name }}</p>
+      </div>
+      <div class="col-md-6">
+        <p><strong>Email:</strong></p>
+        <p class="border rounded p-2"> {{ data.email }} </p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <p><strong>Role:</strong> </p>
+        <p class="border rounded p-2">{{ data.role }}</p>
+      </div>
+      <div class="col-md-6">
+        <p><strong>Gender:</strong> </p>
+        <p class="border rounded p-2">{{ data.gender }} </p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <p><strong>Salary:</strong></p>
+        <p class="border rounded p-2"> {{ data.salary | currency }}</p>
+      </div>
+      <div class="col-md-6">
+        <p><strong>Incremented Salary:</strong> </p>
+        <p class="border rounded p-2">{{ data.incrementedSalary | currency }}</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <p><strong>Status:</strong></p>
+        <p class="border rounded p-2"> {{ data.active ? 'Active' : 'Inactive' }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+

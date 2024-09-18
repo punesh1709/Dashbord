@@ -1,0 +1,29 @@
+<!-- cards 2 -->
+<div class="cards-container d-flex justify-content-evenly">
+  <mat-card class="summary-card p-2">
+    <mat-card-header>
+      <mat-card-title>Total Customers:</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>{{ totalCustomers }}</p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="summary-card p-2">
+    <mat-card-header>
+      <mat-card-title>Total Orders:</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>{{ totalOrders }}</p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="summary-card p-2">
+    <mat-card-header>
+      <mat-card-title>Total Revenue:</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>{{ totalRevenue | currency }}</p>
+    </mat-card-content>
+  </mat-card>
+</div>

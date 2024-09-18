@@ -19,11 +19,10 @@ export class CardsComponent {
   @Input() averageSalary!: number;
   @Input() totalIncrementedSalary!: number;
 
-
-  @Input() totalCustomers!: number;
-  @Input() totalAmount!: number;
-  @Input() totalRevenue!: number;
-  @Input() averageRevenue!: number;
+  @Input() totalCustomers: number = 0;
+  @Input() totalAmount: number = 0;
+  @Input() totalRevenue: number = 0;
+  @Input() averageRevenue: number = 0;
 
   toggleCards() {
     this.showFirstCards = !this.showFirstCards;

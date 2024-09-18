@@ -1,90 +1,167 @@
 <mat-card class="table-card">
-
-  <app-cards 
-  [totalUsers]="totalUsers" 
-  [totalSalary]="totalSalary" 
-  [averageSalary]="averageSalary" 
-  [totalIncrementedSalary]="totalIncrementedSalary">
-</app-cards>
+  <app-cards
+    [totalUsers]="totalUsers"
+    [totalSalary]="totalSalary"
+    [averageSalary]="averageSalary"
+    [totalIncrementedSalary]="totalIncrementedSalary"
+  >
+  </app-cards>
+<div class="border p-2 mt-4">
+  <h3 class="text-center">Usesr</h3>
 
 
   <!-- Add New User Button -->
-  <button
-    mat-raised-button
-    color="primary"
-    (click)="openUserDialog()"
-    class="btns mt-2 mb-2"
-  >
-    <i class="fa-solid fa-plus"></i>
-  </button>
-  <mat-form-field appearance="fill">
-    <mat-label>Search</mat-label>
-    <input
-      matInput
-      (keyup)="applyFilter($event)"
-      placeholder="Filter by name"
-    />
-  </mat-form-field>
+  
+ 
+
+  <!-- Table Container -->
+   <div class="d-flex">
+   <div class="w-50 border p-4 m-2">
+    <div class="d-flex justify-content-between">
+      <mat-form-field appearance="fill">
+        <mat-label>Search</mat-label>
+        <input
+          matInput
+          (keyup)="applyFilter($event)"
+          placeholder="Filter by name"
+        />
+      </mat-form-field>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="openUserDialog()"
+        class="btns mt-2 mb-2"
+      >
+        <i class="fa-solid fa-plus"></i>
+      </button>
+    </div>
   <div class="table-container">
-    <table
-      mat-table
-      [dataSource]="dataSource"
-      matSort
-      class="mat-elevation-z8 responsive-table"
-    >
-      <!-- Name Column -->
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
-      </ng-container>
+    
+    <div class="table-wrapper">
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        matSort
+        class="mat-elevation-z8 responsive-table"
+      >
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            sortActionDescription="Sort by name"
+          >
+            Name
+          </th>
+          <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+        </ng-container>
 
-      <!-- Email Column -->
-      <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
-        <td mat-cell *matCellDef="let element">{{ element.email }}</td>
-      </ng-container>
+        <!-- Email Column -->
+        <ng-container matColumnDef="email">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            sortActionDescription="Sort by email"
+          >
+            Email
+          </th>
+          <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+        </ng-container>
 
-      <!-- Role Column -->
-      <ng-container matColumnDef="role">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Role</th>
-        <td mat-cell *matCellDef="let element">{{ element.role }}</td>
-      </ng-container>
+        <!-- Role Column -->
+        <ng-container matColumnDef="role">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            sortActionDescription="Sort by role"
+          >
+            Role
+          </th>
+          <td mat-cell *matCellDef="let element">{{ element.role }}</td>
+        </ng-container>
 
-      <!-- Salary Column -->
-      <ng-container matColumnDef="salary">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Salary</th>
-        <td mat-cell *matCellDef="let element">
-          {{ element.salary | currency }}
-        </td>
-      </ng-container>
+        <!-- Gender Column -->
+        <ng-container matColumnDef="gender">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            sortActionDescription="Sort by gender"
+          >
+            Gender
+          </th>
+          <td mat-cell *matCellDef="let element">{{ element.gender }}</td>
+        </ng-container>
 
-      <!-- Salary Increment by 20% Column -->
-      <ng-container matColumnDef="incrementedSalary">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>
-          Salary Increment
-        </th>
-        <td mat-cell *matCellDef="let element">
-          {{ element.incrementedSalary | currency }}
-        </td>
-      </ng-container>
+        <!-- Salary Column -->
+        <ng-container matColumnDef="salary">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            sortActionDescription="Sort by salary"
+          >
+            Salary
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.salary | currency }}
+          </td>
+        </ng-container>
 
-      <!-- Actions Column -->
-      <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef class="ml-2">Actions</th>
-        <td mat-cell *matCellDef="let element; let i = index">
-          <button mat-button color="primary" (click)="editUser(element, i)">
-            Edit
-          </button>
-          <button mat-button color="warn" (click)="deleteUser(i)">
-            Delete
-          </button>
-        </td>
-      </ng-container>
+        <!-- Salary Increment by 20% Column -->
+        <ng-container matColumnDef="incrementedSalary">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            sortActionDescription="Sort by salary increment"
+          >
+            Salary Increment
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.incrementedSalary | currency }}
+          </td>
+        </ng-container>
 
-      <!-- Header and Row Declarations -->
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-    </table>
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef class="actions-column">
+            Actions
+          </th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            <!-- Edit Button with FontAwesome Icon -->
+            <button
+              mat-icon-button
+              color="primary"
+              (click)="editUser(element, i)"
+            >
+              <fa-icon [icon]="faEdit"></fa-icon>
+            </button>
+
+            <!-- Delete Button with FontAwesome Icon -->
+            <button mat-icon-button color="warn" (click)="deleteUser(i)">
+              <fa-icon [icon]="faTrash"></fa-icon>
+            </button>
+
+            <!-- User Info Button with FontAwesome Icon -->
+            <button
+              mat-icon-button
+              color="accent"
+              (click)="openUserInfoDialog(element)"
+            >
+              <fa-icon [icon]="faInfoCircle"></fa-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <!-- Header and Row Declarations -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
   </div>
 
   <!-- Paginator -->
@@ -92,8 +169,12 @@
     [pageSizeOptions]="[5, 10, 20]"
     showFirstLastButtons
   ></mat-paginator>
-
+</div>
+<div class="w-50 border p-4 m-2">
+  <app-charts class="border mt-4"></app-charts>
   <!-- Dialog for Add/Edit User -->
+</div>
+</div>
   <ng-template #userDialog>
     <h2 mat-dialog-title class="mb-4">
       {{ isEditMode ? "Edit User" : "Add New User" }}
@@ -111,6 +192,7 @@
               </mat-error>
             </mat-form-field>
           </div>
+
           <!-- Second Column -->
           <div class="col-md-6 mb-3">
             <mat-form-field appearance="fill" class="w-100">
@@ -131,12 +213,17 @@
           <div class="col-md-6 mb-3">
             <mat-form-field appearance="fill" class="w-100">
               <mat-label>Role</mat-label>
-              <input matInput formControlName="role" />
+              <mat-select formControlName="role">
+                <mat-option *ngFor="let role of roles" [value]="role">
+                  {{ role }}
+                </mat-option>
+              </mat-select>
               <mat-error *ngIf="userForm.get('role')?.hasError('required')">
                 Role is required.
               </mat-error>
             </mat-form-field>
           </div>
+
           <!-- Fourth Column -->
           <div class="col-md-6 mb-3">
             <mat-form-field appearance="fill" class="w-100">
@@ -149,6 +236,24 @@
                 Salary must be greater than 0.
               </mat-error>
             </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <!-- Checkbox Column -->
+          <div class="col-md-6 mb-3">
+            <mat-checkbox formControlName="active"> Active User </mat-checkbox>
+          </div>
+
+          <!-- Radio Group Column -->
+          <div class="col-md-6 mb-3">
+            <mat-radio-group formControlName="gender">
+              <mat-radio-button value="male">Male</mat-radio-button>
+              <mat-radio-button value="female">Female</mat-radio-button>
+            </mat-radio-group>
+            <mat-error *ngIf="userForm.get('gender')?.hasError('required')">
+              Gender is required.
+            </mat-error>
           </div>
         </div>
       </div>
@@ -173,9 +278,8 @@
       </div>
     </form>
   </ng-template>
-  <app-charts></app-charts>
-  <!-- <p>Total Users: {{totalUsers}}</p>
-  <p>Total Salary: {{totalSalary | currency}}</p>
-  <p>Average Salary: {{averageSalary | currency}}</p>
-  <p>Total Incremented Salary: {{totalIncrementedSalary | currency}}</p> -->
-</mat-card>
+
+  <!-- User Info Dialog -->
+  
+
+</div>

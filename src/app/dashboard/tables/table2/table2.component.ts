@@ -4,14 +4,21 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-
-interface Order {
+// import { DataSharingService } from '../../../data-sharing.service'; // Adjust the import path
+import { DataSharingService } from '../../../services/data-sharing.service';
+import Swal from 'sweetalert2';
+import { faEdit, faTrash, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { OrderInfoDialogComponent } from './order-info-dialog/order-info-dialog.component';
+export interface Order {
   id: number;
   orderName: string;
   customer: string;
   orderDate: Date;
   amount: number;
   revenue: number;
+  status: string; // New field for mat-select
+  isUrgent: boolean; // New field for mat-checkbox
+  // priority: string; // New field for mat-radio-group
 }
 
 @Component({
@@ -20,12 +27,18 @@ interface Order {
   styleUrls: ['./table2.component.css'],
 })
 export class Table2Component implements OnInit, AfterViewInit {
+  faEdit = faEdit; // Declare FontAwesome icons
+  faTrash = faTrash;
+   faInfoCircle = faInfoCircle;
   displayedColumns: string[] = [
     'orderName',
     'customer',
     'orderDate',
     'amount',
     'revenue',
+    'status',
+    'isUrgent',
+    
     'actions',
   ];
   dataSource: MatTableDataSource<Order>;
@@ -41,7 +54,11 @@ export class Table2Component implements OnInit, AfterViewInit {
 
   @ViewChild('orderDialog') orderDialog: any;
 
-  constructor(private fb: FormBuilder, private dialog: MatDialog) {
+  constructor(
+    private fb: FormBuilder,
+    private dialog: MatDialog,
+    private dataSharingService: DataSharingService // Inject service
+  ) {
     this.dataSource = new MatTableDataSource(this.orders);
     this.orderForm = this.fb.group({
       orderName: ['', Validators.required],
@@ -49,6 +66,9 @@ export class Table2Component implements OnInit, AfterViewInit {
       orderDate: ['', Validators.required],
       amount: [0, [Validators.required, Validators.min(1)]],
       revenue: [0, [Validators.required, Validators.min(1)]],
+      status: ['Pending', Validators.required], // New field
+      isUrgent: [false], // New field
+     
     });
   }
 
@@ -85,9 +105,25 @@ export class Table2Component implements OnInit, AfterViewInit {
   }
 
   deleteOrder(id: number): void {
-    this.orders = this.orders.filter((order) => order.id !== id);
-    this.saveOrdersToLocalStorage();
-    this.refreshTable();
+    // Show a SweetAlert2 confirmation dialog
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Do you really want to delete this order? This action cannot be undone.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Proceed with deleting the order if the user confirms
+        this.orders = this.orders.filter((order) => order.id !== id);
+        this.saveOrdersToLocalStorage();
+        this.refreshTable();
+
+        // Show a success message
+        Swal.fire('Deleted!', 'The order has been deleted.', 'success');
+      }
+    });
   }
 
   onSubmit(): void {
@@ -113,6 +149,7 @@ export class Table2Component implements OnInit, AfterViewInit {
   refreshTable(): void {
     this.dataSource.data = this.orders;
     this.updateStatistics();
+    this.dataSharingService.updateOrders(this.orders); // Notify other components
   }
 
   saveOrdersToLocalStorage(): void {
@@ -128,23 +165,14 @@ export class Table2Component implements OnInit, AfterViewInit {
   }
 
   updateStatistics(): void {
-    const totalCustomers = new Set(this.orders.map((order) => order.customer))
-      .size;
-    const totalAmount = this.orders.reduce(
-      (sum, order) => sum + order.amount,
-      0
-    );
-    const totalRevenue = this.orders.reduce(
-      (sum, order) => sum + order.revenue,
-      0
-    );
-    const averageRevenue = this.orders.length
-      ? totalRevenue / this.orders.length
-      : 0;
+    const totalCustomers = new Set(this.orders.map((order) => order.customer)).size;
+    const totalOrders = this.orders.length;
+    const totalRevenue = this.orders.reduce((sum, order) => sum + order.revenue, 0);
+    const averageRevenue = totalOrders ? totalRevenue / totalOrders : 0;
 
     // Update the view with the calculated values
     this.totalCustomers = totalCustomers;
-    this.totalAmount = totalAmount;
+    this.totalOrders = totalOrders;
     this.totalRevenue = totalRevenue;
     this.averageRevenue = averageRevenue;
   }
@@ -152,9 +180,16 @@ export class Table2Component implements OnInit, AfterViewInit {
   closeDialog(): void {
     this.dialog.closeAll();
   }
+  //constructor(private dialog: MatDialog) {}
 
+  openOrderDetailsDialog(order: Order): void {
+    this.dialog.open(OrderInfoDialogComponent, {
+      width: '400px',
+      data: order // Pass the selected order to the modal
+    });
+  }
   totalCustomers: number = 0;
-  totalAmount: number = 0;
+  totalOrders: number = 0;
   totalRevenue: number = 0;
   averageRevenue: number = 0;
 }

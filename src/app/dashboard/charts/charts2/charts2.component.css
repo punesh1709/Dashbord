@@ -1,0 +1,22 @@
+#chartContainer {
+  width: 1200px; /* Set a fixed width larger than the viewport */
+  height: 400px; /* Adjust height as needed */
+  overflow-x: auto; /* Enable horizontal scrolling */
+  overflow-y: hidden; /* Disable vertical scrolling */
+  margin: 0 auto; /* Optional: Center the chart horizontally */
+}
+.chart-container {
+  width: 100%;
+  overflow-x: auto; /* Allows horizontal scrolling if the chart exceeds the container's width */
+}
+
+#chartContainer { 
+  min-width: 600px; /* Minimum width to maintain readability */
+  height: 600px; /* Set the height of the chart */
+}
+
+@media screen and (max-width: 768px) {
+  #chartContainer {
+    min-width: 1000px; /* Adjust the minimum width for smaller screens */
+  }
+}

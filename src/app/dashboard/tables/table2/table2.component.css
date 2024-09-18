@@ -1,13 +1,12 @@
-/* .table-card {
-  padding: 16px;
-  margin: 16px;
+
+.btns{
+  /* margin: 10px 0 10px 93.5vw; */
+  width: 2vw;
+  background-color: rgb(7, 67, 7) !important;
+  color: aliceblue !important;
+  margin: 5px 5px 5px 0;
 }
 
-.table-container {
-  overflow: auto;
+.chart{
+padding-left: 10px;
 }
-
-.mat-elevation-z8 {
-  margin-top: 20px;
-} */
-

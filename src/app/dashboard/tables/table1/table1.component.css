@@ -6,3 +6,49 @@
   
 }
 
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table-wrapper {
+  min-width: 600px; /* Adjust as needed */
+}
+
+.responsive-table {
+  width: 100%;
+  overflow: hidden;
+}
+
+@media (max-width: 600px) {
+  .mat-header-cell, .mat-cell {
+    padding: 8px;
+    font-size: 12px;
+  }
+
+  .actions-column {
+    width: 120px;
+  }
+
+  .mat-cell {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .mat-header-cell {
+    display: none;
+  }
+
+  .mat-row {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+
+  .mat-cell::before {
+    content: attr(data-title);
+    font-weight: bold;
+    display: block;
+  }
+}

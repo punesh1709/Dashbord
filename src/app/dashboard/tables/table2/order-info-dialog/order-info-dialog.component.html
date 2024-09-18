@@ -1,0 +1,58 @@
+<!-- order-details-dialog.component.html -->
+<div mat-dialog-actions class="d-flex justify-content-end p-0 m-0">
+  <!-- <button mat-icon-button (click)="onClose()" aria-label="Cancel">
+    <mat-icon>cancel</mat-icon>
+  </button> -->
+  <div mat-dialog-actions>
+    <button mat-icon-button (click)="closeDialog()"  aria-label="Cancel"> <mat-icon>cancel</mat-icon></button>
+  </div>
+</div>
+<h1 mat-dialog-title>Order Details</h1>
+<div mat-dialog-content>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <p><strong>Order Name:</strong></p>
+        <p class="border rounded-2 p-2">{{ order.orderName }}</p>
+      </div>
+      <div class="col-md-6 mb-3">
+        <p><strong>Customer:</strong></p>
+        <p class="border rounded-2 p-2">{{ order.customer }}</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <p><strong>Order Date:</strong></p>
+        <p class="border rounded-2 p-2">{{ order.orderDate | date: 'shortDate' }}</p>
+      </div>
+      <div class="col-md-6 mb-3">
+        <p><strong>Amount:</strong></p>
+        <p class="border rounded-2 p-2">{{ order.amount | currency }}</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <p><strong>Revenue:</strong></p>
+        <p class="border rounded-2 p-2">{{ order.revenue | currency }}</p>
+      </div>
+      <div class="col-md-6 mb-3">
+        <p><strong>Status:</strong></p>
+        <p class="border rounded-2 p-2">{{ order.status }}</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <p><strong>Urgent:</strong></p>
+        <p class="border rounded-2 p-2">{{ order.isUrgent ? "Yes" : "No" }}</p>
+      </div>
+      <div class="col-md-6 mb-3">
+        <p><strong>Priority:</strong></p>
+        <p class="border rounded-2 p-2">{{ order.priority }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+

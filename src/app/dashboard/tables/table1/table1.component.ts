@@ -2,16 +2,19 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA  } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { DataSharingService } from '../../../services/data-sharing.service';
+import { UserInfoDialogComponent } from '../../user-info-dialog/user-info-dialog.component';
+import { faEdit, faTrash, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
 export interface UserData {
   name: string;
   email: string;
   role: string;
   salary: number;
-  incrementedSalary: number; // New field for the 20% incremented salary
+  incrementedSalary: number;
 }
 
 @Component({
@@ -20,41 +23,48 @@ export interface UserData {
   styleUrls: ['./table1.component.css'],
 })
 export class Table1Component implements OnInit, AfterViewInit {
-  displayedColumns: string[] = [
-    'name',
-    'email',
-    'role',
-    'salary',
-    'incrementedSalary',
-    'actions',
-  ];
+  faEdit = faEdit; // Declare FontAwesome icons
+  faTrash = faTrash;
+  faInfoCircle = faInfoCircle;
+  displayedColumns: string[] = ['name', 'email', 'role', 'salary', 'incrementedSalary', 'gender', 'actions'];
+
   dataSource = new MatTableDataSource<UserData>(this.loadData());
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   userForm: FormGroup;
+  roles: string[] = ['Admin', 'User', 'Manager']; 
   isEditMode = false;
   currentIndex: number | null = null;
 
   @ViewChild('userDialog') userDialog: any;
 
-  // New properties
   totalUsers = 0;
   totalSalary = 0;
   averageSalary = 0;
   totalIncrementedSalary = 0;
 
-  constructor(private fb: FormBuilder, private dialog: MatDialog) {
+  constructor(
+    private fb: FormBuilder,
+    private dialog: MatDialog,
+    private dataSharingService: DataSharingService // Inject the service
+  ) {
     this.userForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       role: ['', Validators.required],
       salary: [0, [Validators.required, Validators.min(1)]],
+      active: [false],  // Checkbox
+      gender: ['', Validators.required] 
     });
   }
 
   ngOnInit() {}
+
+  
+
+
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -69,7 +79,8 @@ export class Table1Component implements OnInit, AfterViewInit {
 
   saveData(data: UserData[]): void {
     localStorage.setItem('userData', JSON.stringify(data));
-    this.updateStatistics(); // Update statistics after saving data
+    this.updateStatistics();
+    this.dataSharingService.notifyDataChange(); // Notify about data change
   }
 
   updateStatistics(): void {
@@ -115,7 +126,7 @@ export class Table1Component implements OnInit, AfterViewInit {
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'cancel'
+      cancelButtonText: 'Cancel'
     }).then((result) => {
       if (result.isConfirmed) {
         const data = this.dataSource.data;
@@ -126,12 +137,11 @@ export class Table1Component implements OnInit, AfterViewInit {
       }
     });
   }
-  
 
   onSubmit(): void {
     if (this.userForm.valid) {
       const userData = this.userForm.value;
-      userData.incrementedSalary = userData.salary * 1.2; // Calculate the incremented salary
+      userData.incrementedSalary = userData.salary * 1.2;
 
       const data = this.dataSource.data;
 
@@ -145,6 +155,13 @@ export class Table1Component implements OnInit, AfterViewInit {
       this.dataSource._updateChangeSubscription();
       this.dialog.closeAll();
     }
+  }
+
+  openUserInfoDialog(element: any): void {
+    this.dialog.open(UserInfoDialogComponent, {
+      width: '400px',
+      data: element
+    });
   }
 
   closeDialog(): void {

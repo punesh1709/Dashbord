@@ -12,12 +12,11 @@ import {
 } from '@angular/animations';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
- 
+  selector: 'app-main-com',
+  templateUrl: './main-com.component.html',
+  styleUrl: './main-com.component.css'
 })
-export class AppComponent implements OnInit {
+export class MainComComponent implements OnInit {
   isHandset: boolean = false;
 
   constructor(private breakpointObserver: BreakpointObserver) {}

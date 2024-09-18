@@ -1,30 +1,10 @@
-<p>orders works!</p>
-<!-- 
-import { TestBed } from '@angular/core/testing';
-
-import { DataSharingService } from './data-sharing.service';
-
-describe('DataSharingService', () => {
-  let service: DataSharingService;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(DataSharingService);
-  });
-
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
-}); -->
-
-
-<!-- 
 
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 // import {Order}
-import { Order } from './dashboard/tables/table2/table2.component';
+// import { Order } from './dashboard/tables/table2/table2.component';
+import { Order } from '../dashboard/tables/table2/table2.component';
 @Injectable({
   providedIn: 'root',
 })
@@ -45,5 +25,4 @@ export class DataSharingService {
   updateOrders(orders: Order[]): void {
     this.ordersSubject.next(orders);
   }
-
-} -->
+} 

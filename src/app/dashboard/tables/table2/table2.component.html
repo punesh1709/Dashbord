@@ -1,145 +1,217 @@
-<mat-card class="table-card">
-  <app-cards
- 
+<!-- <mat-card class="table-card"> -->
+  <app-cards2
   [totalCustomers]="totalCustomers"
-  [totalAmount]="totalAmount"
+  [totalOrders]="totalOrders"
   [totalRevenue]="totalRevenue"
   [averageRevenue]="averageRevenue">
-</app-cards>
-  <mat-form-field appearance="fill">
-    <mat-label>Search</mat-label>
-    <input
-      matInput
-      (keyup)="applyFilter($event)"
-      placeholder="Filter by order name"
-    />
-  </mat-form-field>
+</app-cards2>
 
-  <!-- Add New Order Button -->
-  <button mat-raised-button color="primary" (click)="openOrderDialog()">
-    Add New Order
-  </button>
-
+<div class="border p-2 mt-4">
+  <h3 class="text-center">Orders</h3>
+ 
+ <div class="d-flex">
+  <div class="w-50 p-4 m-2 border">
   <div class="table-container">
-    <table
-      mat-table
-      [dataSource]="dataSource"
-      matSort
-      class="mat-elevation-z8 responsive-table"
-    >
-      <!-- Order Name Column -->
-      <ng-container matColumnDef="orderName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Order Name</th>
-        <td mat-cell *matCellDef="let element">{{ element.orderName }}</td>
-      </ng-container>
-
-      <!-- Customer Column -->
-      <ng-container matColumnDef="customer">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Customer</th>
-        <td mat-cell *matCellDef="let element">{{ element.customer }}</td>
-      </ng-container>
-
-      <!-- Order Date Column -->
-      <ng-container matColumnDef="orderDate">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Order Date</th>
-        <td mat-cell *matCellDef="let element">
-          {{ element.orderDate | date: 'shortDate' }}
-        </td>
-      </ng-container>
-
-      <!-- Amount Column -->
-      <ng-container matColumnDef="amount">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount</th>
-        <td mat-cell *matCellDef="let element">
-          {{ element.amount | currency }}
-        </td>
-      </ng-container>
-
-      <!-- Revenue Column -->
-      <ng-container matColumnDef="revenue">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Revenue</th>
-        <td mat-cell *matCellDef="let element">
-          {{ element.revenue | currency }}
-        </td>
-      </ng-container>
-
-      <!-- Actions Column -->
-      <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef>Actions</th>
-        <td mat-cell *matCellDef="let element">
-          <button mat-button color="primary" (click)="editOrder(element)">Edit</button>
-          <button mat-button color="warn" (click)="deleteOrder(element.id)">Delete</button>
-        </td>
-      </ng-container>
-
-      <!-- Header and Row Declarations -->
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-    </table>
+  <div class="d-flex justify-content-between">
+  
+    <mat-form-field appearance="fill">
+      <mat-label>Search</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Filter by order name" />
+    </mat-form-field>
+    <button mat-raised-button color="primary" class="btns" (click)="openOrderDialog()">
+      <i class="fa-solid fa-plus"></i>
+    </button>
   </div>
+    <div class="table-responsive">
+      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 responsive- table">
+        <!-- Order Name Column -->
+        <ng-container matColumnDef="orderName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Order Name</th>
+          <td mat-cell *matCellDef="let element">{{ element.orderName }}</td>
+        </ng-container>
 
-  <!-- Paginator -->
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        <!-- Customer Column -->
+        <ng-container matColumnDef="customer">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Customer</th>
+          <td mat-cell *matCellDef="let element">{{ element.customer }}</td>
+        </ng-container>
 
-  <!-- Dialog for Add/Edit Order -->
-  <ng-template #orderDialog>
-    <h2 mat-dialog-title>{{ isEditMode ? 'Edit Order' : 'Add New Order' }}</h2>
+        <!-- Order Date Column -->
+        <ng-container matColumnDef="orderDate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Order Date</th>
+          <td mat-cell *matCellDef="let element">{{ element.orderDate | date: 'shortDate' }}</td>
+        </ng-container>
+
+        <!-- Amount Column -->
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount</th>
+          <td mat-cell *matCellDef="let element">{{ element.amount | currency }}</td>
+        </ng-container>
+
+        <!-- Revenue Column -->
+        <ng-container matColumnDef="revenue">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Revenue</th>
+          <td mat-cell *matCellDef="let element">{{ element.revenue | currency }}</td>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+          <td mat-cell *matCellDef="let element">{{ element.status }}</td>
+        </ng-container>
+
+        <!-- Urgent Column -->
+        <ng-container matColumnDef="isUrgent">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Urgent</th>
+          <td mat-cell *matCellDef="let element">
+            <mat-checkbox [checked]="element.isUrgent" disabled></mat-checkbox>
+          </td>
+        </ng-container>
+
+        <!-- Priority Column -->
+        <ng-container matColumnDef="priority">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Priority</th>
+          <td mat-cell *matCellDef="let element">{{ element.priority }}</td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <!-- Actions Column -->
+<ng-container matColumnDef="actions">
+  <th mat-header-cell *matHeaderCellDef>Actions</th>
+  <td mat-cell *matCellDef="let element">
+    <button mat-icon-button color="primary" (click)="editOrder(element)">
+      <fa-icon [icon]="faEdit"></fa-icon>
+    </button>
+    <button mat-icon-button color="warn" (click)="deleteOrder(element.id)">
+      <fa-icon [icon]="faTrash"></fa-icon>
+    </button>
+    <!-- Button to open order details modal -->
+    <button mat-icon-button color="accent" (click)="openOrderDetailsDialog(element)">
+      <fa-icon [icon]="faInfoCircle"></fa-icon>
+    </button>
+  </td>
+</ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+    <mat-paginator
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+  ></mat-paginator>
+  </div>
+</div>
+
+<div class="w-50 border p-4 m-2">
+  <app-charts2 [orders]="orders" class="w-50"></app-charts2>
+</div>
+<!-- Order Dialog -->
+</div>
+
+<ng-template #orderDialog>
+  <h1 mat-dialog-title>{{ isEditMode ? 'Edit Order' : 'Add Order' }}</h1>
+  <div mat-dialog-content>
     <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
-      <mat-form-field appearance="fill">
-        <mat-label>Order Name</mat-label>
-        <input matInput formControlName="orderName" />
-        <mat-error *ngIf="orderForm.get('orderName')?.hasError('required')">
-          Order Name is required.
-        </mat-error>
-      </mat-form-field>
+      <div class="container">
+        <div class="row">
+          <!-- First Column -->
+          <div class="col-md-6 mb-3">
+            <mat-form-field appearance="fill" class="w-100">
+              <mat-label>Order Name</mat-label>
+              <input matInput formControlName="orderName" />
+              <mat-error *ngIf="orderForm.get('orderName')?.hasError('required')">
+                Order Name is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <!-- Second Column -->
+          <div class="col-md-6 mb-3">
+            <mat-form-field appearance="fill" class="w-100">
+              <mat-label>Customer</mat-label>
+              <input matInput formControlName="customer" />
+              <mat-error *ngIf="orderForm.get('customer')?.hasError('required')">
+                Customer is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Customer</mat-label>
-        <input matInput formControlName="customer" />
-        <mat-error *ngIf="orderForm.get('customer')?.hasError('required')">
-          Customer is required.
-        </mat-error>
-      </mat-form-field>
+        <div class="row">
+          <!-- Third Column -->
+          <div class="col-md-6 mb-3">
+            <mat-form-field appearance="fill" class="w-100">
+              <mat-label>Order Date</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="orderDate" />
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-error *ngIf="orderForm.get('orderDate')?.hasError('required')">
+                Order Date is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <!-- Fourth Column -->
+          <div class="col-md-6 mb-3">
+            <mat-form-field appearance="fill" class="w-100">
+              <mat-label>Amount</mat-label>
+              <input matInput formControlName="amount" type="number" />
+              <mat-error *ngIf="orderForm.get('amount')?.hasError('required')">
+                Amount is required
+              </mat-error>
+              <mat-error *ngIf="orderForm.get('amount')?.hasError('min')">
+                Amount must be greater than 0
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Order Date</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="orderDate" />
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-        <mat-error *ngIf="orderForm.get('orderDate')?.hasError('required')">
-          Order Date is required.
-        </mat-error>
-      </mat-form-field>
+        <div class="row">
+          <!-- Fifth Column -->
+          <div class="col-md-6 mb-3">
+            <mat-form-field appearance="fill" class="w-100">
+              <mat-label>Revenue</mat-label>
+              <input matInput formControlName="revenue" type="number" />
+              <mat-error *ngIf="orderForm.get('revenue')?.hasError('required')">
+                Revenue is required
+              </mat-error>
+              <mat-error *ngIf="orderForm.get('revenue')?.hasError('min')">
+                Revenue must be greater than 0
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <!-- Sixth Column -->
+          <div class="col-md-6 mb-3">
+            <mat-form-field appearance="fill" class="w-100">
+              <mat-label>Status</mat-label>
+              <mat-select formControlName="status">
+                <mat-option value="Pending">Pending</mat-option>
+                <mat-option value="Completed">Completed</mat-option>
+                <mat-option value="Shipped">Shipped</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Amount</mat-label>
-        <input matInput type="number" formControlName="amount" />
-        <mat-error *ngIf="orderForm.get('amount')?.hasError('required')">
-          Amount is required.
-        </mat-error>
-      </mat-form-field>
+        <div class="row">
+          <!-- Checkbox for Urgent -->
+          <div class="col-md-12 mb-3">
+            <mat-checkbox formControlName="isUrgent">Urgent</mat-checkbox>
+          </div>
+        </div>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Revenue</mat-label>
-        <input matInput type="number" formControlName="revenue" />
-        <mat-error *ngIf="orderForm.get('revenue')?.hasError('required')">
-          Revenue is required.
-        </mat-error>
-      </mat-form-field>
-
-      <div mat-dialog-actions>
-        <button mat-button type="button" (click)="closeDialog()">Cancel</button>
-        <button mat-raised-button color="primary" type="submit">
-          {{ isEditMode ? 'Update' : 'Add' }}
-        </button>
+        <div mat-dialog-actions class="mt-4">
+          <button mat-button type="button" (click)="closeDialog()" class="btn btn-secondary">
+            Cancel
+          </button>
+          <button mat-raised-button color="primary" type="submit" class="btn btn-primary">
+            {{ isEditMode ? 'Update' : 'Add' }}
+          </button>
+        </div>
       </div>
     </form>
-  </ng-template>
-
-  <div class="summary-section">
-    <p><strong>Total Customers:</strong> {{ totalCustomers }}</p>
-    <p><strong>Total Amount:</strong> {{ totalAmount | currency }}</p>
-    <p><strong>Total Revenue:</strong> {{ totalRevenue | currency }}</p>
-    <p><strong>Average Revenue:</strong> {{ averageRevenue | currency }}</p>
   </div>
-</mat-card>
+</ng-template>
+
+
+</div>
